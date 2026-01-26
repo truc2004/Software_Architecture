@@ -1,29 +1,25 @@
 package org.example.jwt.service;
-
-import org.example.jwt.authen.UserPrincipal;
 import org.example.jwt.entity.User;
 import org.example.jwt.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.example.jwt.util.PasswordUtil;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository repo;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        // Kiểm tra xem user có tồn tại trong database không?
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        return new UserPrincipal(user);
+    public UserService(UserRepository repo) {
+        this.repo = repo;
     }
 
+    public User login(String username, String password) {
+        User user = repo.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        if (!PasswordUtil.match(password, user.getPassword())) {
+            throw new RuntimeException("Wrong password");
+        }
+        return user;
+    }
 }
