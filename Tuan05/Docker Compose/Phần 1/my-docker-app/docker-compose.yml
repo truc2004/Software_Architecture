@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  web:
+    image: nginx
+    container_name: my-nginx
+    ports:
+      - "8080:80"
+
+  app:
+    build: .
+    container_name: my-node
+    command: ["node", "-e", "console.log('Hello from Node container'); setInterval(()=>{},1000)"]

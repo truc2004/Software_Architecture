@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    container_name: node-bai4
+    ports:
+      - "3000:3000"
