@@ -4,7 +4,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello from Flask + Docker Compose 🚀"
+    return {"message": "Hello from Flask Docker Compose 🚀"}
+
+@app.route("/hello/<name>")
+def hello(name):
+    return {"message": f"Hello {name}"}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

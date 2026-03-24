@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  app:
+    build: ./app
+    volumes:
+      - ./app:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+
+  tests:
+    build: ./app
+    volumes:
+      - ./app:/app
+      - ./tests:/tests
+    entrypoint: ["pytest", "/tests"]
+    environment:
+      - PYTHONPATH=/app
+    depends_on:
+      - app

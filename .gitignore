@@ -1,0 +1,38 @@
+# Grafana
+**/grafana_data/
+**/grafana/
+
+# Docker runtime (full cover)
+**/data/
+**/data/db/
+**/db_data/
+**/postgres_data/
+**/pgdata/
+**/wp_data/
+
+# Database files
+*.db
+*.sql
+*.sqlite
+
+# Socket / system
+*.sock
+
+# Node
+node_modules/
+
+# Env
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Grafana
+**/grafana_data/
+
+# Prometheus
+**/prometheus_data/
+
+# DB files
+*.db

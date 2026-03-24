@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  django:
+    build: ./django_app
+    container_name: django_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./django_app:/app
+    depends_on:
+      - redis
+    networks:
+      - django_net
+
+  celery:
+    build: ./django_app
+    container_name: celery_worker
+    command: celery -A myproject worker --loglevel=info
+    depends_on:
+      - django
+      - redis
+    networks:
+      - django_net
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - django_net
+
+networks:
+  django_net:
+    driver: bridge

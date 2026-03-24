@@ -1,0 +1,7 @@
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  docker:
+    exposedByDefault: false   # chỉ route các container có label
