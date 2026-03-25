@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vertical Partition Test</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Vertical Partition</h2>
+
+    <input id="name" placeholder="Name">
+
+    <select id="gender">
+        <option value="Nam">Nam</option>
+        <option value="Nu">Nu</option>
+    </select>
+
+    <input id="age" type="number" placeholder="Age">
+
+    <button onclick="saveUser()">Save</button>
+</div>
+
+<script>
+    function saveUser() {
+
+        let data = {
+            name: document.getElementById("name").value,
+            gender: document.getElementById("gender").value,
+            age: parseInt(document.getElementById("age").value)
+        };
+
+        console.log("DATA GUI:", data);
+
+        fetch("/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.text())
+            .then(data => {
+                alert(data);
+                location.reload();
+            })
+            .catch(err => {
+                console.error("Lỗi:", err);
+                alert("Lỗi rồi, mở console xem!");
+            });
+    }
+</script>
+
+</body>
+</html>

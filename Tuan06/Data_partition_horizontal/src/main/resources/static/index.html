@@ -1,0 +1,28 @@
+<input id="name" placeholder="Name"><br><br>
+
+<select id="gender">
+    <option value="Nam">Nam</option>
+    <option value="Nu">Nu</option>
+</select><br><br>
+
+<input id="age" placeholder="Age"><br><br>
+
+<button onclick="saveUser()">Save</button>
+
+<script>
+    function saveUser() {
+        fetch("/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: document.getElementById("name").value,
+                gender: document.getElementById("gender").value,
+                age: parseInt(document.getElementById("age").value)
+            })
+        })
+            .then(res => res.text())
+            .then(data => alert(data));
+    }
+</script>
